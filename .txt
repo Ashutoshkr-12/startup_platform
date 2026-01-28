@@ -1,0 +1,2 @@
+mongodb+srv://Startup:startupPlatform@cluster0.o64rbp0.mongodb.net
+
