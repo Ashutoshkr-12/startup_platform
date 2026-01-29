@@ -1,7 +1,7 @@
 
 function page() {
   return (
-    <div>page</div>
+    <div className="w-full h-screen flex items-center justify-center">Pricing page</div>
   )
 }
 

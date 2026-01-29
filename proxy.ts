@@ -1,26 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
 
-const PUBLIC_PATHS = [
-  "/",
-  "/login",
-  "/register",
-  "/pricing",
-  "/contact-us",
-];
 
 const AUTH_PAGES = ["/login", "/register"];
 
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  const token = req.cookies.get("token")?.value;
+  const token = req.cookies.get("token");
+  //console.log(token)
 
-  if (!token) {
-    // Block protected pages
+  if (token?.value === undefined) {
     if (
       pathname.startsWith("/dashboard") ||
-      pathname.startsWith("/api/claims")
+      pathname.startsWith("/api/claims") ||
+      pathname.startsWith("/deals") 
     ) {
       return NextResponse.redirect(new URL("/login", req.url));
     }
@@ -29,22 +22,15 @@ export function proxy(req: NextRequest) {
     return NextResponse.next();
   }
 
-
   try {
-    const decoded = jwt.verify(
-      token,
-      process.env.JWT_SECRET!
-    ) as {
-      id: string;
-      email: string;
-      verified: boolean;
-    };
-
+   
     if (AUTH_PAGES.includes(pathname)) {
       return NextResponse.redirect(new URL("/", req.url));
     }
 
+    
   } catch (err) {
+    
     const res = NextResponse.redirect(new URL("/login", req.url));
     res.cookies.delete("token");
     return res;
@@ -54,6 +40,7 @@ export function proxy(req: NextRequest) {
 export const config = {
   matcher: [
     "/dashboard/:path*",
+    "/deals/:path*",
     "/login",
     "/register",
     "/api/claims/:path*",

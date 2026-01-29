@@ -2,7 +2,7 @@
 
 function page() {
   return (
-    <div>page</div>
+  <div className="w-full h-screen flex items-center justify-center">Contect page</div>
   )
 }
 
