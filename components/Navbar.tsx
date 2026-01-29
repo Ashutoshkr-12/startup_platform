@@ -3,6 +3,7 @@ import { getMe } from "@/lib/currentUser";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
 
 type User = {
   _id: string;
@@ -10,10 +11,27 @@ type User = {
 };
 const Navbar = () => {
   const [user, setUser] = useState<User>();
+  const router = useRouter();
   //console.log(user)
+
   useEffect(() => {
     getMe().then(setUser);
   }, []);
+
+
+const handleLogout = async () => {
+  try {
+    await fetch("/api/auth/logout", {
+      method: "POST",
+    });
+
+    setUser(undefined); // clear UI state
+    router.push("/login"); // or "/"
+  } catch (err) {
+    console.error("Logout failed", err);
+  }
+};
+
 
   return (
     <div className=" sticky z-99 top-4 mx-6 bg-slate-300 rounded-full  border ">
@@ -54,9 +72,13 @@ const Navbar = () => {
 
           {user ? (
             <>
-              <Button className="text-md px-6 text-white  font-semibold hover:text-slate-900">
-                Logout
-              </Button>
+              <Button
+  onClick={handleLogout}
+  className="text-md px-6 text-white font-semibold hover:text-slate-900"
+>
+  Logout
+</Button>
+
             </>
           ) : (
             <div className="flex items-center gap-4">
