@@ -1,21 +1,16 @@
 import connectDB from "@/lib/db";
 import Deals from "@/models/deals.model";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-type RouteProps = {
-  params: {
-    deal_id: string;
-  };
-};
 
 export async function GET(
-  req: Request,
-  { params }: RouteProps
+ req: NextRequest,
+  { params }: { params: { deal_id: string } }
 ) {
   const userVerified = req.headers.get("user-verified") === "true";
   await connectDB();
 
-  const { deal_id } = await params;
+  const { deal_id } =  params;
 //console.log('id from api: ', deal_id)
   try {
     const deal = await Deals.findById(deal_id);
