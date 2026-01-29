@@ -16,6 +16,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
 // import { useDeals } from '@/hooks/useDeals';
 // import { DealCard } from '@/components/deals/DealCard';
 // import { DealFilters } from '@/components/deals/DealFilters';
@@ -170,9 +171,11 @@ export default function DealsPage() {
                     <span className="font-semibold text-blue-600">
                       ${i}0,000 credits
                     </span>
+                    <Link href={`/deals/${i}`}>
                     <button className="text-sm text-slate-500 hover:text-slate-700">
                       View details →
                     </button>
+                    </Link>
                   </div>
                 </motion.div>
               ))}

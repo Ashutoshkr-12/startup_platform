@@ -9,11 +9,12 @@ import Link from 'next/link';
 // import { ClaimButton } from '@/components/deals/ClaimButton';
 
 interface DealPageProps {
-  params: Promise<{ id: string }>;
+  params: Promise<{ deals_id: string }>;
 }
 
 export default function DealPage({ params }: DealPageProps) {
-  const { id } = use(params);
+  const { deal_id } = use(params);
+  console.log(deal_id)
   
   // TODO: Replace with actual hooks
   // const { deal, isLoading, error } = useDeal(id);
@@ -22,7 +23,7 @@ export default function DealPage({ params }: DealPageProps) {
 
   // Mock data for scaffolding
   const deal = {
-    id,
+    deal_id,
     title: 'Cloud Provider Pro',
     description: `
       Get $10,000 in cloud credits to build and scale your startup. 

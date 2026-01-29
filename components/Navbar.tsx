@@ -1,6 +1,10 @@
 import Link from 'next/link'
 
 const Navbar = () => {
+
+  const user_id = "1";
+
+
   return (
     <div className=" sticky z-99 top-4 mx-6 bg-slate-300 rounded-full  border "> 
         <header>
@@ -30,7 +34,7 @@ const Navbar = () => {
                Contact us
               </Link>
               <Link
-                href="/dashboard"
+              href={`/dashboard/${user_id}`}
                 className="text-md font-semibold hover:text-slate-600 text-slate-900"
               >
                 Dashboard

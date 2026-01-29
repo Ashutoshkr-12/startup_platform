@@ -57,7 +57,7 @@ export default function LandingPage() {
   return (
     <main className="min-h-screen">
       {/* HERO SECTION */}
-      <section className="relative overflow-hidden bg-zinc-800 py-24 ">
+      <section className="relative overflow-hidden  py-24 ">
         <div className="absolute" />  
         <div className="container flex items-center select-none relative mx-auto px-4">
           <div className="mx-auto max-w-4xl text-center ">
@@ -66,7 +66,7 @@ export default function LandingPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
-              className="mb-6 text-4xl font-bold tracking-tight text-white sm:text-5xl lg:text-6xl"
+              className="mb-6 text-4xl font-bold tracking-tight border-b-black text-black sm:text-5xl lg:text-6xl"
             >
               Unlock
               <span className="bg-linear-to-r from-[#eb0e0e] to-[#d65c5c] bg-clip-text text-transparent">
@@ -89,7 +89,7 @@ export default function LandingPage() {
               </Link>
               <Link
                 href="/register"
-                className="inline-flex h-12 items-center justify-center rounded-lg border border-slate-600 px-8 font-medium text-slate-300 transition-colors hover:bg-slate-800"
+                className="inline-flex h-12 items-center justify-center rounded-lg border hover:border-slate-500 px-8 font-medium text-slate-300 transition-colors bg-slate-800"
               >
                 Create Account
               </Link>
