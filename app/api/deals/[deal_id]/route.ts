@@ -1,6 +1,6 @@
 import connectDB from "@/lib/db";
 import Deals from "@/models/deals.model";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 type RouteProps = {
   params: {
@@ -8,20 +8,45 @@ type RouteProps = {
   };
 };
 
-export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const deal_id = searchParams.get("deal_id");
-
-  console.log("deal_id",deal_id)
-  if (!deal_id) {
-    return NextResponse.json(
-      { success: false, message: "deal_id missing" },
-      { status: 400 }
-    );
-  }
+export async function GET(
+  req: Request,
+  { params }: RouteProps
+) {
+  const userVerified = req.headers.get("user-verified") === "true";
   await connectDB();
 
-  const deal = await Deals.findOne({_id: deal_id});
-  return NextResponse.json(deal);
-}
+  const { deal_id } = await params;
+//console.log('id from api: ', deal_id)
+  try {
+    const deal = await Deals.findById(deal_id);
+   // console.log('deal from api:',deal);
 
+    if (!deal) {
+      return NextResponse.json(
+        { success: false, message: "Deal not found" },
+        { status: 404 }
+      );
+    }
+
+    if(deal.isLocked && !userVerified){
+      return NextResponse.json({
+        success: false,
+        message: "This deal is only available for verified users"
+      }, { status: 403})
+    }
+
+    return NextResponse.json(
+      {
+        success: true,
+        data: deal,
+      },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error fetching deal:", error);
+    return NextResponse.json(
+      { success: false, message: "Server error" },
+      { status: 500 }
+    );
+  }
+}

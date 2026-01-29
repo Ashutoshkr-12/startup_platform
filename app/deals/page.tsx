@@ -99,9 +99,9 @@ export default function DealsPage() {
             onChange={(e) => setCategory(e.target.value)}
             className="border px-4 py-2 rounded-lg"
           >
-            {CATEGORIES.map((cat) => (
-              <option key={cat.value} value={cat.value}>
-                {cat.label}
+            {CATEGORIES.map((category,i: number) => (
+              <option key={i} value={category.value}>
+                {category.label}
               </option>
             ))}
           </select>

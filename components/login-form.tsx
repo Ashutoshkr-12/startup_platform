@@ -46,6 +46,7 @@ export function LoginForm({
    const data = await res.json();
  // console.log('data after login user:',data)
     if(res.ok && data.success){
+      localStorage.setItem("token",data.token)
      toast('Login successed')
      router.push('/')
     }else{

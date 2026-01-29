@@ -1,46 +1,64 @@
-import Link from 'next/link'
+"use client";
+import { getMe } from "@/lib/currentUser";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { Button } from "./ui/button";
 
+type User = {
+  _id: string;
+  email: string;
+};
 const Navbar = () => {
-
-  const user_id = "1";
-
+  const [user, setUser] = useState<User>();
+  //console.log(user)
+  useEffect(() => {
+    getMe().then(setUser);
+  }, []);
 
   return (
-    <div className=" sticky z-99 top-4 mx-6 bg-slate-300 rounded-full  border "> 
-        <header>
-          <nav className="container mx-auto flex h-16 items-center justify-between px-4">
-            
-            <Link href="/" className="text-xl font-bold text-black">
-              Startup Benefits
-            </Link>
+    <div className=" sticky z-99 top-4 mx-6 bg-slate-300 rounded-full  border ">
+      <header>
+        <nav className="container mx-auto flex h-16 items-center justify-between px-4">
+          <Link href="/" className="text-xl font-bold text-black">
+            Startup Benefits
+          </Link>
 
-            <div className="hidden items-center gap-6 md:flex">
+          <div className="hidden items-center gap-6 md:flex">
+            <Link
+              href="/deals"
+              className="text-md font-semibold hover:text-slate-600 text-slate-900"
+            >
+              Deals
+            </Link>
+            <Link
+              href="/pricing"
+              className="text-md font-semibold hover:text-slate-600 text-slate-900"
+            >
+              Pricing
+            </Link>
+            <Link
+              href="/contact-us"
+              className="text-md font-semibold hover:text-slate-600 text-slate-900"
+            >
+              Contact us
+            </Link>
+            {user && (
               <Link
-                href="/deals"
-                className="text-md font-semibold hover:text-slate-600 text-slate-900"
-              >
-                Deals
-              </Link>
-              <Link
-                href="/pricing"
-                className="text-md font-semibold hover:text-slate-600 text-slate-900"
-              >
-                Pricing
-              </Link>
-              <Link
-                href="/contact-us"
-                className="text-md font-semibold hover:text-slate-600 text-slate-900"
-              >
-               Contact us
-              </Link>
-              <Link
-              href={`/dashboard/${user_id}`}
+                href={`/dashboard/${user._id}`}
                 className="text-md font-semibold hover:text-slate-600 text-slate-900"
               >
                 Dashboard
               </Link>
-            </div>
+            )}
+          </div>
 
+          {user ? (
+            <>
+              <Button className="text-md px-6 text-white  font-semibold hover:text-slate-900">
+                Logout
+              </Button>
+            </>
+          ) : (
             <div className="flex items-center gap-4">
               <Link
                 href="/login"
@@ -55,10 +73,11 @@ const Navbar = () => {
                 Get Started
               </Link>
             </div>
-          </nav>
-        </header>
-        </div>
-  )
-}
+          )}
+        </nav>
+      </header> 
+    </div>
+  );
+};
 
-export default Navbar
+export default Navbar;

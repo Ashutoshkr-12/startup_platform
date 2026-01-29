@@ -3,8 +3,8 @@ import { model, models, Schema } from "mongoose";
 
 
 const claimedDeals = new Schema({
-    userId: {type: Schema.Types.ObjectId, ref:"users", required: true},
-    deals: { type: Schema.Types.ObjectId, ref: "deals", required: true},
+    user: {type: Schema.Types.ObjectId, ref:"users", required: true},
+    deal: { type: Schema.Types.ObjectId, ref: "deals", required: true},
 }, { timestamps: true});
 
 
